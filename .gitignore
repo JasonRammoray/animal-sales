@@ -1,0 +1,7 @@
+logs
+config.ini
+.idea/*
+*.pyc
+*.pyo
+*.sqlite
+*.db
