@@ -11,6 +11,7 @@ pytest = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
 jsonschema = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"

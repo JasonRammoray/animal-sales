@@ -39,9 +39,8 @@ class AnimalCenter(db.Model):
 
         if re.match(VALID_PASSWORD_RE, password) is None:
             raise AssertionError(
-                """A center password must be between 8 and 64 characters and contain at least\n
-                one digit, one special character, and one uppercase letter
-                """
+                """A center password must be between 8 and 64 characters and contain at least one digit,"""
+                """ one special character, and one uppercase letter"""
             )
         self.password_hash = generate_password_hash(password)
 

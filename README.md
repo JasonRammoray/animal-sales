@@ -13,7 +13,7 @@ This is a demo application prepared as part of the final project in the "Python 
     - `[TOKEN]` followed by the token options on each row below
     - `[LOGGING]` followed by the logging options on each row below. The section should specify these attributes:
         * `audit_http_requests` - a comma-separated list of HTTP verbs (in upper case) that shall be stored in the audit log 
-        * `audit_log` - a path to the audit log
+        * `audit_log` - a path to the audit log relative to the project folder
 * If you don't have a SQLite database created, make sure to have one: ` FLASK_APP=app/main.py flask db init`
 * Apply the database migrations: `FLASK_APP=app/main.py flask db upgrade`
 * If you're using a JetBrains IDE, create a run configuration for the Flask app by specifying script path as `app/main.py`. Otherwise, run that from the terminal: `FLASK_APP=app/main.py flask run`.
@@ -27,3 +27,8 @@ In order to create an animal center, send a POST request to `/register` with a s
     "address": "full address of 5-255 characters"
 }
 ```
+Example:
+`curl -X POST -H 'Content-type: application/json' -d '{"login": "x_lab", "password": "v0rYS@cre!", "address": "123 Lab str., 20A"}' localhost:5000/register`
+
+## Running tests
+Run `pytest -v` in a terminal.
