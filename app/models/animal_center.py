@@ -1,6 +1,7 @@
+import re
+
 from sqlalchemy.orm import validates
 from werkzeug.security import generate_password_hash, check_password_hash
-import re
 
 from app import db
 
@@ -12,6 +13,11 @@ class AnimalCenter(db.Model):
     login = db.Column(db.String(255), unique=True, nullable=False)
     password_hash = db.Column(db.String(128), nullable=False)
     address = db.Column(db.String(255), unique=False, nullable=False)
+    api_requests = db.relationship(
+        'ApiAccessRequest',
+        cascade='all,delete,delete-orphan',
+        backref='center'
+    )
 
     @validates('login')
     def validate_login(self, _, login):
@@ -33,6 +39,10 @@ class AnimalCenter(db.Model):
             raise AssertionError('A center address len must be within 5 and 255 characters')
         return address
 
+    @staticmethod
+    def get_password_hash(password):
+        return generate_password_hash(password)
+
     def set_password(self, password):
         if not password:
             raise AssertionError('A center password has not been provided')
@@ -42,7 +52,7 @@ class AnimalCenter(db.Model):
                 """A center password must be between 8 and 64 characters and contain at least one digit,"""
                 """ one special character, and one uppercase letter"""
             )
-        self.password_hash = generate_password_hash(password)
+        self.password_hash = self.get_password_hash(password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

@@ -6,6 +6,10 @@ from flask_migrate import Migrate
 from logging.handlers import RotatingFileHandler
 import os
 
+from sqlalchemy import event
+from sqlalchemy.engine import Engine
+from sqlite3 import Connection as SQLiteConnection
+
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -28,9 +32,19 @@ def create_app(config):
         app.logger.addHandler(file_handler)
         app.logger.setLevel(logging.INFO)
 
-    from app.blueprints import get_registration_bp, get_animal_center_bp
+    from app.blueprints import get_registration_bp, get_animal_center_bp, get_login_bp
     app.register_blueprint(get_registration_bp())
     app.register_blueprint(get_animal_center_bp())
+    app.register_blueprint(get_login_bp())
+
+    @event.listens_for(Engine, 'connect')
+    def enable_sqlite_fk_support(db_conn, _):
+        # See details at https://docs.sqlalchemy.org/en/14/dialects/sqlite.html#foreign-key-support
+        if not isinstance(db_conn, SQLiteConnection):
+            return
+        cursor = db_conn.cursor()
+        cursor.execute("PRAGMA foreign_keys=ON")
+        cursor.close()
 
     @app.before_request
     def force_json_content_type():
