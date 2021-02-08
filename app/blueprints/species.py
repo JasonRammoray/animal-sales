@@ -20,7 +20,7 @@ def add_species():
 
     instance = Species.query.filter_by(name=json_payload['name']).first()
     if instance is not None:
-        abort(make_response(jsonify({'error': 'species already exists'}), 409))
+        abort(make_response(jsonify({'error': 'species already exists'}), 400))
 
     new_species = None
     try:

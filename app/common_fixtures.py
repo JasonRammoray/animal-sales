@@ -3,6 +3,7 @@ from flask.testing import FlaskClient
 
 from app import create_app, db
 from app.models.animal_center import AnimalCenter
+from app.models.species import Species
 from app.utils.jwt import generate_token
 
 
@@ -45,13 +46,26 @@ def secure_password():
 
 @pytest.fixture
 def animal_center(secure_password):
-    login = 'test_center_123'
-    animal_center = AnimalCenter(login=login, address='test address')
+    animal_center = AnimalCenter(login='test_center_123', address='test address')
     animal_center.set_password(secure_password)
     db.session.add(animal_center)
     db.session.commit()
     yield animal_center
     AnimalCenter.query.filter_by(id=animal_center.id).delete()
+    db.session.commit()
+
+
+@pytest.fixture
+def species():
+    new_species = Species(
+        name='test animal species',
+        description='This is a lovely test animal species',
+        price=999.5
+    )
+    db.session.add(new_species)
+    db.session.commit()
+    yield new_species
+    Species.query.filter_by(id=new_species.id).delete()
     db.session.commit()
 
 
