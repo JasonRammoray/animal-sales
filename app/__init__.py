@@ -49,6 +49,6 @@ def create_app(config):
 
     @app.before_request
     def force_json_content_type():
-        if not request.is_json:
+        if request.method in 'POST,PUT' and not request.is_json:
             abort(415)
     return app
