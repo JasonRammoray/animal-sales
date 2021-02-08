@@ -58,3 +58,8 @@ def animal_center(secure_password):
 @pytest.fixture
 def jwt_token(animal_center, app_secret):
     return generate_token(subject=animal_center.id, secret=app_secret, ttl=10)
+
+
+@pytest.fixture
+def auth_http_headers(jwt_token):
+    return {'Authorization': f'Bearer {jwt_token}'}
