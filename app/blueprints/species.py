@@ -11,7 +11,7 @@ from app.utils.jwt_protected import jwt_protected
 @species_bp.route('', methods=['POST'])
 @jwt_protected
 def add_species():
-    current_app.logger.info(f'[POST] {request.url} {g.entity_id} species')
+    current_app.logger.info(f'[POST] {request.url} center {g.entity_id} creates species')
     json_payload = request.get_json()
     try:
         validate(instance=json_payload, schema=species_payload_schema)
