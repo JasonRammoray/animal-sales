@@ -8,9 +8,13 @@ class Species(db.Model):
     name = db.Column(db.String(255), unique=True, nullable=False)
     description = db.Column(db.String(512), unique=False, nullable=False)
     price = db.Column(db.Float, default=0)
+    animals = db.relationship(
+        'Animals',
+        cascade='all,delete,delete-orphan'
+    )
 
     @validates('name')
-    def validate_login(self, _, name):
+    def validate_name(self, _, name):
         if not name:
             raise AssertionError('A species must have name')
 
@@ -20,7 +24,7 @@ class Species(db.Model):
         return name
 
     @validates('description')
-    def validate_login(self, _, description):
+    def validate_description(self, _, description):
         if not description:
             raise AssertionError('A species must have description')
 
@@ -30,7 +34,7 @@ class Species(db.Model):
         return description
 
     @validates('price')
-    def validate_login(self, _, price):
+    def validate_price(self, _, price):
         if price < 0:
             raise AssertionError('A species price should be positive')
 

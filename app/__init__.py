@@ -32,11 +32,12 @@ def create_app(config):
         app.logger.addHandler(file_handler)
         app.logger.setLevel(logging.INFO)
 
-    from app.blueprints import get_registration_bp, get_animal_center_bp, get_login_bp, get_species_bp
+    from app.blueprints import get_registration_bp, get_animal_center_bp, get_login_bp, get_species_bp, get_animals_bp
     app.register_blueprint(get_registration_bp())
     app.register_blueprint(get_animal_center_bp())
     app.register_blueprint(get_login_bp())
     app.register_blueprint(get_species_bp())
+    app.register_blueprint(get_animals_bp())
 
     @event.listens_for(Engine, 'connect')
     def enable_sqlite_fk_support(db_conn, _):

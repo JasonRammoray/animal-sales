@@ -18,6 +18,11 @@ class AnimalCenter(db.Model):
         cascade='all,delete,delete-orphan',
         backref='center'
     )
+    animals = db.relationship(
+        'Animals',
+        cascade='all,delete,delete-orphan',
+        backref='center'
+    )
 
     @validates('login')
     def validate_login(self, _, login):

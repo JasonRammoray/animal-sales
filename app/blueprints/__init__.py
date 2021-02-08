@@ -4,6 +4,7 @@ registration_bp = Blueprint('registration_bp', __name__, url_prefix='/register')
 animal_center_bp = Blueprint('animal_center_bp', __name__, url_prefix='/centers')
 login_bp = Blueprint('login_bp', __name__, url_prefix='/login')
 species_bp = Blueprint('species_bp', __name__, url_prefix='/species')
+animals_bp = Blueprint('animals_bp', __name__, url_prefix='/animals')
 
 
 def get_registration_bp():
@@ -24,3 +25,8 @@ def get_login_bp():
 def get_species_bp():
     from app.blueprints import species
     return species_bp
+
+
+def get_animals_bp():
+    from app.blueprints import animals
+    return animals_bp
