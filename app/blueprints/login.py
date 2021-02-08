@@ -1,15 +1,12 @@
-from datetime import datetime, timedelta
-
 from flask import jsonify, current_app, request, abort, make_response
 from jsonschema import validate, ValidationError
 
 from app import db
 from app.blueprints import login_bp
-import jwt
-
 from app.models.animal_center import AnimalCenter
 from app.models.api_access_request import ApiAccessRequest
 from app.schemas.login_request import login_request_schema
+from app.utils.jwt import generate_token
 
 
 @login_bp.route('', methods=['POST'])
@@ -31,10 +28,9 @@ def handle_login():
     db.session.add(api_request)
     db.session.commit()
 
-    token_eol = datetime.utcnow() + timedelta(hours=current_app.config['TOKEN_EXP_TIME'])
-    message = {
-        'sub': animal_center.id,
-        'exp': token_eol
-    }
-    encoded_jwt = jwt.encode(message, current_app.config['SECRET_KEY'], algorithm='HS256')
+    encoded_jwt = generate_token(
+        subject=animal_center.id,
+        ttl=current_app.config['TOKEN_EXP_TIME'],
+        secret=current_app.config['SECRET_KEY']
+    )
     return jsonify({'token': encoded_jwt})
