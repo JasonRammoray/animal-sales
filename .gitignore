@@ -6,3 +6,4 @@ config.ini
 *.sqlite
 *.db
 logs
+.coverage

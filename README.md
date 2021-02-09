@@ -53,4 +53,4 @@ Example:
 `curl -X POST -H 'Content-type: application/json' -d '{"login": "x_lab", "password": "v0rYS@cre!"}' localhost:5000/login`
 
 ## Running tests
-Run `pytest -v` in a terminal.
+Run `pytest -v --cov=app/` in a terminal.
