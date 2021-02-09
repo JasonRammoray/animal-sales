@@ -21,7 +21,8 @@ class AnimalCenter(db.Model):
     animals = db.relationship(
         'Animals',
         cascade='all,delete,delete-orphan',
-        backref='center'
+        backref='center',
+        lazy=True
     )
 
     @validates('login')
