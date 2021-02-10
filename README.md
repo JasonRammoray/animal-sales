@@ -27,7 +27,6 @@ This is a demo application prepared as part of the final project in the "Python 
     - `[TOKEN]` followed by the token options on each row below
         * `expiration_time` - an expiration time in seconds
     - `[LOGGING]` followed by the logging options on each row below. The section should specify these attributes:
-        * `audit_http_requests` - a comma-separated list of HTTP verbs (in upper case) that shall be stored in the audit log 
         * `audit_log` - a path to the audit log relative to the project folder
 * Initialize a database: `FLASK_APP=app/main.py flask db init`
 * Create the database migrations: `FLASK_APP=app/main.py flask db migrate`
