@@ -2,7 +2,15 @@
 This is a demo application prepared as part of the final project in the "Python from scratch" learning path.
 
 ## Installation instructions
-* Make sure you have Python 3.7 installed. If that isn't the case, you can use [pyenv](https://github.com/pyenv/pyenv).
+### Through Docker
+* Build an image: `docker build -t 'animal_center' .`
+* Run the container: `docker run -d -p 5000:5000 'animal_center'`
+* If you need to stop a container:
+    - find the container id: `docker ps`
+    - stop the container: `docker stop CONTAINER_ID_HERE`
+
+### With your own infrastructure
+* Make sure you have Python >=3.7 installed. If that isn't the case, you can use [pyenv](https://github.com/pyenv/pyenv).
 * Install [pipenv](https://pypi.org/project/pipenv/)
 * Install the packages:
     - `pipenv shell`
@@ -21,10 +29,10 @@ This is a demo application prepared as part of the final project in the "Python 
     - `[LOGGING]` followed by the logging options on each row below. The section should specify these attributes:
         * `audit_http_requests` - a comma-separated list of HTTP verbs (in upper case) that shall be stored in the audit log 
         * `audit_log` - a path to the audit log relative to the project folder
-* Initialize a database: ` FLASK_APP=app/main.py flask db init`
+* Initialize a database: `FLASK_APP=app/main.py flask db init`
 * Create the database migrations: `FLASK_APP=app/main.py flask db migrate`
 * Apply the database migrations: `FLASK_APP=app/main.py flask db upgrade`
-* If you're using a JetBrains IDE, create a run configuration for the Flask app by specifying script path as `app/main.py`. Otherwise, run that from the terminal: `FLASK_APP=app/main.py flask run`.
+* If you're using a JetBrains IDE, create a run configuration for the Flask app by specifying script path as `app/main.py`. Otherwise, run that from the terminal: `FLASK_APP=app/main.py flask run --host=0.0.0.0`.
 
 ## App shell
 In order to activate the app shell mode run: `FLASK_APP=app/main.py flask shell`. Make sure you've migrated and have upgraded your database first.
