@@ -8,6 +8,22 @@ from app.schemas.species import species_payload_schema
 from app.utils.jwt_protected import jwt_protected
 
 
+def get_species_repr(species_instance):
+    return {
+        'id': species_instance.id,
+        'name': species_instance.name,
+        'animals': len(species_instance.animals)
+    }
+
+
+def get_animal_repr(animal_instance):
+    return {
+        'id': animal_instance.id,
+        'name': animal_instance.name,
+        'species': animal_instance.species
+    }
+
+
 @species_bp.route('', methods=['POST'])
 @jwt_protected
 def add_species():
@@ -42,3 +58,30 @@ def add_species():
         'price': instance.price,
     }
     return jsonify(response), 201
+
+
+@species_bp.route('', methods=['GET'])
+def fetch_species():
+    order_criteria = Species.id.asc()
+    species = [
+        get_species_repr(species)
+        for species in Species.query.order_by(order_criteria).all()
+    ]
+    return jsonify(species), 200
+
+
+@species_bp.route('/<species_id>', methods=['GET'])
+def fetch_species_details(species_id):
+    species = Species.query.get(species_id)
+    if species is None:
+        abort(make_response(jsonify({'error': 'species does not exist'}), 404))
+    payload = {
+        'id': species.id,
+        'name': species.name,
+        'description': species.description,
+        'animals': [
+            get_animal_repr(animal)
+            for animal in sorted(species.animals, key=lambda item: item.id)
+        ]
+    }
+    return jsonify(payload), 200
