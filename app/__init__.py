@@ -1,6 +1,6 @@
 import logging
 
-from flask import Flask, request, abort
+from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from logging.handlers import RotatingFileHandler
@@ -52,4 +52,8 @@ def create_app(config):
     def force_json_content_type():
         if request.method in 'POST,PUT' and not request.is_json:
             abort(415)
+
+    @app.errorhandler(404)
+    def handle_404(_):
+        return jsonify({'error': 'requested resource is not found'}), 404
     return app
