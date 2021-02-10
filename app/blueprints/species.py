@@ -9,6 +9,12 @@ from app.utils.jwt_protected import jwt_protected
 
 
 def get_species_repr(species_instance):
+    """
+    Constructs a species representation
+    based on a species instance
+    :param species_instance: Species
+    :return: dict
+    """
     return {
         'id': species_instance.id,
         'name': species_instance.name,
@@ -17,6 +23,12 @@ def get_species_repr(species_instance):
 
 
 def get_animal_repr(animal_instance):
+    """
+    Constructs an animal representation
+    based on an animal instance
+    :param animal_instance: Animals
+    :return: dict
+    """
     return {
         'id': animal_instance.id,
         'name': animal_instance.name,

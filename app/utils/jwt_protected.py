@@ -12,6 +12,12 @@ class CenterLookupError(Exception):
 
 
 def jwt_protected(fn):
+    """
+    A decorator that shall be applied to any app route
+    where a JTW token is required for authentication
+    :param fn: function route handler
+    :return: function
+    """
     @functools.wraps(fn)
     def wrapper(*args, **kwargs):
         auth_header = request.headers.get('Authorization', '')

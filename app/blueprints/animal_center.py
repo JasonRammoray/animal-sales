@@ -5,6 +5,12 @@ from app.models.animal_center import AnimalCenter
 
 
 def get_animal_center_repr(animal_center_instance):
+    """
+    Creates a dict animal center representation based
+    on an animal center instance
+    :param animal_center_instance: AnimalCenter
+    :return: dict
+    """
     return {
         'id': animal_center_instance.id,
         'name': animal_center_instance.login
@@ -12,6 +18,12 @@ def get_animal_center_repr(animal_center_instance):
 
 
 def get_animal_repr(animal_instance):
+    """
+    Creates a dict animal representation based
+    on an animal instance
+    :param animal_instance: Animals
+    :return: dict
+    """
     return {
         'id': animal_instance.id,
         'name': animal_instance.name,

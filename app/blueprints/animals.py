@@ -12,6 +12,12 @@ from app.utils.jwt_protected import jwt_protected
 
 
 def get_animal_repr(animal_instance):
+    """
+    Creates a dict animal representation
+    based on an animal instance
+    :param animal_instance: Animals
+    :return: dict
+    """
     return {
         'id': animal_instance.id,
         'centerId': animal_instance.center_id,
@@ -61,6 +67,14 @@ def add_animal():
 
 
 def get_animal_on_center_behalf(animal_id, animal_center_id):
+    """
+    Fetches an animal and ensures its ownership
+    by a requested center. If the animal doesn't exist
+    or it's not owned by the center, raises an HTTPException
+    :param animal_id: int
+    :param animal_center_id: int
+    :return: Animals
+    """
     animal = Animals.query.get(animal_id)
     if animal is None:
         abort(make_response(jsonify({'error': 'animal does not exists'}), 404))
